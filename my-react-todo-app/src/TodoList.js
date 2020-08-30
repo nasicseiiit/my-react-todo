@@ -1,5 +1,8 @@
 import React from 'react';
 import TodoForm from './TodoForm';
+import './TodoList.css';
+
+
 
 class TodoList extends React.Component {
   state={
@@ -23,6 +26,12 @@ class TodoList extends React.Component {
     return (
     <div>
       <TodoForm onSubmit={this.addItem}/>
+      <div className="listItems">
+      {this.state.todoItems.map(function(todoItem){
+        return <li key={todoItem.id}>{todoItem.text}</li>
+      })
+      }
+      </div>
     </div>
   );
   }
