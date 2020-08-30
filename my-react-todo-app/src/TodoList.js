@@ -1,8 +1,6 @@
 import React from 'react';
 import TodoForm from './TodoForm';
-import './TodoList.css';
-
-
+import TodoItem from './TodoItem';
 
 class TodoList extends React.Component {
   state={
@@ -21,17 +19,36 @@ class TodoList extends React.Component {
     );
 
   }
+  onComplete = (todoId) =>{
+    this.setState(
+      {
+        todoItems: this.state.todoItems.map(function(todo)
+      {
+        if(todo.id===todoId)
+        {
+          return {...todo,complete:!todo.complete};
+        }
+        else {
+          {
+            return todo;
+          }
+        }
+      })
+      }
+    );
+  }
 
   render () {
     return (
     <div>
-      <TodoForm onSubmit={this.addItem}/>
-      <div className="listItems">
-      {this.state.todoItems.map(function(todoItem){
-        return <li key={todoItem.id}>{todoItem.text}</li>
-      })
-      }
-      </div>
+      <TodoForm onSubmit={this.addItem} />
+
+      {this.state.todoItems.map(todoItem=>(
+         <TodoItem key={todoItem.id}
+                onComplete={()=>this.onComplete(todoItem.id)}
+                todoItem={todoItem}/>
+      ))}
+
     </div>
   );
   }
