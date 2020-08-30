@@ -13,7 +13,7 @@ class TodoList extends React.Component {
     this.setState(
       function()
       {
-        if(todoItem!=="")
+        if(todoItem.text!=="")
         {
         return {todoItems:[todoItem,...this.state.todoItems]};
         }
