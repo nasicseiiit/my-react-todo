@@ -84,7 +84,7 @@ class TodoList extends React.Component {
 
 
     return (
-    <div style={{textAlign:"center", color: "blue", }}>
+    <div style={{textAlign:"center", color: "fuchsia", marginRight:500, marginLeft:500, border: "5px solid deepskyblue" }}>
       <TodoForm onSubmit={this.addItem} />
 
       {todoItems.map(todoItem=>(
@@ -96,9 +96,9 @@ class TodoList extends React.Component {
                 todoItem={todoItem}/>
       ))}
       <div >
-      <button onClick={()=>this.showTodoItems("All")}>All</button>
-      <button onClick={()=>this.showTodoItems("Active")}>Active</button>
-      <button onClick={()=>this.showTodoItems("Complete")}>Complete</button>
+      <button  style={{color: "purple"}} onClick={()=>this.showTodoItems("All")}>All</button>
+      <button  style={{color: "orangered"}} onClick={()=>this.showTodoItems("Active")}>Active</button>
+      <button  style={{color: "green"}} onClick={()=>this.showTodoItems("Complete")}>Complete</button>
       </div>
       <div >
       Total Items are: {totalItems}
