@@ -4,7 +4,10 @@ import TodoItem from './TodoItem';
 
 class TodoList extends React.Component {
   state={
-    todoItems:[]
+    todoItems:[],
+    totalItems:0,
+    displayType:"All"
+
   }
 
   addItem = (todoItem)=>{
@@ -48,19 +51,38 @@ class TodoList extends React.Component {
     );
   }
 
+  showTodoItems=(typeToDisplay)=>{
+      this.setState(
+        {
+            displayType:typeToDisplay
+        }
+      );
+  }
+
   render () {
+    let todoItems=[];
+
+    if(this.state.displayType==="All"){
+      todoItems = this.state.todoItems;
+    }
+
     return (
-    <div >
+    <div style={{textAlign:"center", color: "blue", }}>
       <TodoForm onSubmit={this.addItem} />
 
-      {this.state.todoItems.map(todoItem=>(
+      {todoItems.map(todoItem=>(
          <TodoItem
                 key={todoItem.id}
                 onComplete={()=>this.onComplete(todoItem.id)}
                 deleteTodoItem={()=>this.deleteTodoItem(todoItem.id)}
                 todoItem={todoItem}/>
       ))}
-      <div style={{textAlign:"center", color: "blue"}}>
+      <div >
+      <button onClick={()=>this.showTodoItems("All")}>All</button>
+      <button>Active</button>
+      <button>Complete</button>
+      </div>
+      <div >
       Total Items are: {this.state.totalItems}
       </div>
     </div>
