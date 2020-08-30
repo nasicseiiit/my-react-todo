@@ -38,17 +38,31 @@ class TodoList extends React.Component {
     );
   }
 
+  deleteTodoItem = (todoId)=>{
+    this.setState(
+      {
+        todoItems:this.state.todoItems.filter(function(todoItem){
+          return todoItem.id!==todoId;
+        })
+      }
+    );
+  }
+
   render () {
     return (
-    <div>
+    <div >
       <TodoForm onSubmit={this.addItem} />
 
       {this.state.todoItems.map(todoItem=>(
-         <TodoItem key={todoItem.id}
+         <TodoItem
+                key={todoItem.id}
                 onComplete={()=>this.onComplete(todoItem.id)}
+                deleteTodoItem={()=>this.deleteTodoItem(todoItem.id)}
                 todoItem={todoItem}/>
       ))}
-
+      <div style={{textAlign:"center", color: "blue"}}>
+      Total Items are: {this.state.totalItems}
+      </div>
     </div>
   );
   }
