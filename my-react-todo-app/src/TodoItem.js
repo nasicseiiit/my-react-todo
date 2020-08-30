@@ -1,9 +1,11 @@
 import React from 'react';
 
 function TodoItem(props) {
-  return <div style={{display:"flex",
+  return <div
+    style={{display:"flex",
   justifyContent:"center"}}
           >
+            {props.counter}
         <li style={{
 
                     textAlign: "center",
@@ -15,8 +17,9 @@ function TodoItem(props) {
         onClick={props.onComplete}>
           {props.todoItem.text}
         </li>
-        <button onClick={props.deleteTodoItem}>x
-        </button >
+        <button onClick={props.onComplete}>✓</button >
+        <button onClick={props.deleteTodoItem}>x</button >
+
         </div>
 }
 

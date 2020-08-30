@@ -5,7 +5,6 @@ import TodoItem from './TodoItem';
 class TodoList extends React.Component {
   state={
     todoItems:[],
-    totalItems:0,
     displayType:"All"
 
   }
@@ -61,10 +60,28 @@ class TodoList extends React.Component {
 
   render () {
     let todoItems=[];
-
+    let totalItems;
+    let counter=1;
     if(this.state.displayType==="All"){
       todoItems = this.state.todoItems;
+      totalItems = todoItems.length;
     }
+
+    else if(this.state.displayType==="Active"){
+      todoItems = this.state.todoItems.filter(function(todoItem){
+        return !todoItem.complete;
+      })
+      totalItems = todoItems.length;
+    }
+
+    else if(this.state.displayType==="Complete"){
+      todoItems = this.state.todoItems.filter(function(todoItem){
+        return todoItem.complete;
+      })
+      totalItems = todoItems.length;
+    }
+
+
 
     return (
     <div style={{textAlign:"center", color: "blue", }}>
@@ -75,15 +92,16 @@ class TodoList extends React.Component {
                 key={todoItem.id}
                 onComplete={()=>this.onComplete(todoItem.id)}
                 deleteTodoItem={()=>this.deleteTodoItem(todoItem.id)}
+                counter = {counter++}
                 todoItem={todoItem}/>
       ))}
       <div >
       <button onClick={()=>this.showTodoItems("All")}>All</button>
-      <button>Active</button>
-      <button>Complete</button>
+      <button onClick={()=>this.showTodoItems("Active")}>Active</button>
+      <button onClick={()=>this.showTodoItems("Complete")}>Complete</button>
       </div>
       <div >
-      Total Items are: {this.state.totalItems}
+      Total Items are: {totalItems}
       </div>
     </div>
   );
