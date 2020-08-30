@@ -2,10 +2,29 @@ import React from 'react';
 import TodoForm from './TodoForm';
 import TodoItem from './TodoItem';
 
+var firebase = require('firebase');
+var uuid = require('uuid');
+var firebaseConfig = {
+    apiKey: "AIzaSyCclals1pb04yrMv5u1jxu0Qpj3yNJnu7A",
+    authDomain: "my-react-todo-app-c1d36.firebaseapp.com",
+    databaseURL: "https://my-react-todo-app-c1d36.firebaseio.com",
+    projectId: "my-react-todo-app-c1d36",
+    storageBucket: "my-react-todo-app-c1d36.appspot.com",
+    messagingSenderId: "957049945928",
+    appId: "1:957049945928:web:a605a411e357b0f816fd7d",
+    measurementId: "G-J3VNC3SE2K"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+
+
 class TodoList extends React.Component {
   state={
     todoItems:[],
-    displayType:"All"
+    displayType:"All",
+    uid: uuid.v1()
 
   }
 
@@ -19,7 +38,6 @@ class TodoList extends React.Component {
         }
       }
     );
-
   }
   onComplete = (todoId) =>{
     this.setState(
@@ -58,7 +76,12 @@ class TodoList extends React.Component {
       );
   }
 
+
+
   render () {
+    firebase.database().ref('Nasireact/'+this.state.uid).set({
+      todoItems: this.state.todoItems
+    });
     let todoItems=[];
     let totalItems;
     let counter=1;
