@@ -17,15 +17,28 @@ var firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
+  const db = firebase.firestore();
+var todoItems = [];
+var ref = firebase.database().ref('Nasireact/');
+ref.on('value',gotData,errData);
 
+function gotData(data){
+  console.log("Got data");
+  todoItems = data.val();
+  console.log(todoItems);
+}
+
+function errData(err){
+  console.log(err)
+}
 
 
 class TodoList extends React.Component {
+
   state={
     todoItems:[],
     displayType:"All",
     uid: uuid.v1()
-
   }
 
   addItem = (todoItem)=>{
@@ -38,13 +51,17 @@ class TodoList extends React.Component {
         }
       }
     );
+    firebase.database().ref('Nasireact/').push(
+      todoItem
+    );
+
   }
-  onComplete = (todoId) =>{
+  onComplete = (todoItem) =>{
     this.setState(
       {
         todoItems: this.state.todoItems.map(function(todo)
       {
-        if(todo.id===todoId)
+        if(todo.id===todoItem.id)
         {
           return {...todo,complete:!todo.complete};
         }
@@ -56,15 +73,21 @@ class TodoList extends React.Component {
       })
       }
     );
+    firebase.database().ref('Nasireact/').push(
+    todoItem
+    );
   }
 
-  deleteTodoItem = (todoId)=>{
+  deleteTodoItem = (todoItem)=>{
     this.setState(
       {
         todoItems:this.state.todoItems.filter(function(todoItem){
-          return todoItem.id!==todoId;
+          return todoItem.id!==todoItem.id;
         })
       }
+    );
+    firebase.database().ref('Nasireact/').push(
+      todoItem
     );
   }
 
@@ -74,14 +97,14 @@ class TodoList extends React.Component {
             displayType:typeToDisplay
         }
       );
+
   }
 
 
 
   render () {
-    firebase.database().ref('Nasireact/'+this.state.uid).set({
-      todoItems: this.state.todoItems
-    });
+
+
     let todoItems=[];
     let totalItems;
     let counter=1;
@@ -104,7 +127,7 @@ class TodoList extends React.Component {
       totalItems = todoItems.length;
     }
 
-
+    // firebase.database().ref('Nasireact/'+this.state.uid).set({todoItems:todoItems});
 
     return (
     <div style={{textAlign:"center", color: "fuchsia", marginRight:500, marginLeft:500, border: "5px solid deepskyblue" }}>
@@ -113,8 +136,8 @@ class TodoList extends React.Component {
       {todoItems.map(todoItem=>(
          <TodoItem
                 key={todoItem.id}
-                onComplete={()=>this.onComplete(todoItem.id)}
-                deleteTodoItem={()=>this.deleteTodoItem(todoItem.id)}
+                onComplete={()=>this.onComplete(todoItem)}
+                deleteTodoItem={()=>this.deleteTodoItem(todoItem)}
                 counter = {counter++}
                 todoItem={todoItem}/>
       ))}
