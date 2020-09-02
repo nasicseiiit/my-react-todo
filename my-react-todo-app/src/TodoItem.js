@@ -1,24 +1,19 @@
 import React from 'react';
+import './TodoItem.css';
 
 function TodoItem(props) {
+  const listItemsStyle = props.todoItem.complete ? "completed":"not-completed"
   return <div
-    style={{display:"flex",
-  justifyContent:"center" , padding:5,marginLeft:30,marginRight:30,marginTop:15, borderRadius:10, border: "1px solid lightsalmon",  cursor:"pointer", backgroundColor:"paleturquoise"}}
+    className = "TodoItem"
+
           >
             {props.counter}
-        <li style={{
-
-                    textAlign: "center",
-                    textDecoration: props.todoItem.complete ? "line-through":"",
-                    textDecorationColor: props.todoItem.complete ? "red":""
-
-                }}
-
+        <li className={listItemsStyle}
         onClick={props.onComplete}>
           {props.todoItem.text}
         </li>
-        <button style={{color: "green"}} onClick={props.onComplete}>✓</button >
-        <button style={{color: "red"}} onClick={props.deleteTodoItem}>x</button >
+        <button className="complete-button" onClick={props.onComplete}>✓</button >
+        <button className="close-button" onClick={props.deleteTodoItem}>x</button >
 
         </div>
 }

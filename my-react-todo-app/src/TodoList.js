@@ -2,44 +2,15 @@ import React from 'react';
 import TodoForm from './TodoForm';
 import TodoItem from './TodoItem';
 
-var firebase = require('firebase');
-var uuid = require('uuid');
-var firebaseConfig = {
-    apiKey: "AIzaSyCclals1pb04yrMv5u1jxu0Qpj3yNJnu7A",
-    authDomain: "my-react-todo-app-c1d36.firebaseapp.com",
-    databaseURL: "https://my-react-todo-app-c1d36.firebaseio.com",
-    projectId: "my-react-todo-app-c1d36",
-    storageBucket: "my-react-todo-app-c1d36.appspot.com",
-    messagingSenderId: "957049945928",
-    appId: "1:957049945928:web:a605a411e357b0f816fd7d",
-    measurementId: "G-J3VNC3SE2K"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-  const db = firebase.firestore();
-var todoItems = [];
-var ref = firebase.database().ref('Nasireact/');
-ref.on('value',gotData,errData);
-
-function gotData(data){
-  console.log("Got data");
-  todoItems = data.val();
-  console.log(todoItems);
-}
-
-function errData(err){
-  console.log(err)
-}
-
 
 class TodoList extends React.Component {
 
-  state={
-    todoItems:[],
-    displayType:"All",
-    uid: uuid.v1()
-  }
+    state = {
+      todoItems:[],
+    displayType:"All"
+    };
+
+
 
   addItem = (todoItem)=>{
     this.setState(
@@ -50,9 +21,6 @@ class TodoList extends React.Component {
         return {todoItems:[todoItem,...this.state.todoItems]};
         }
       }
-    );
-    firebase.database().ref('Nasireact/').push(
-      todoItem
     );
 
   }
@@ -73,22 +41,18 @@ class TodoList extends React.Component {
       })
       }
     );
-    firebase.database().ref('Nasireact/').push(
-    todoItem
-    );
+
   }
 
   deleteTodoItem = (todoItem)=>{
     this.setState(
       {
-        todoItems:this.state.todoItems.filter(function(todoItem){
-          return todoItem.id!==todoItem.id;
+        todoItems:this.state.todoItems.filter(function(todo){
+          return todo.id!==todoItem.id;
         })
       }
     );
-    firebase.database().ref('Nasireact/').push(
-      todoItem
-    );
+
   }
 
   showTodoItems=(typeToDisplay)=>{
@@ -107,10 +71,10 @@ class TodoList extends React.Component {
 
     let todoItems=[];
     let totalItems;
-    let counter=1;
     if(this.state.displayType==="All"){
       todoItems = this.state.todoItems;
       totalItems = todoItems.length;
+
     }
 
     else if(this.state.displayType==="Active"){
@@ -127,18 +91,17 @@ class TodoList extends React.Component {
       totalItems = todoItems.length;
     }
 
-    // firebase.database().ref('Nasireact/'+this.state.uid).set({todoItems:todoItems});
-
     return (
     <div style={{textAlign:"center", color: "fuchsia", marginRight:500, marginLeft:500, border: "5px solid deepskyblue" }}>
+
       <TodoForm onSubmit={this.addItem} />
 
-      {todoItems.map(todoItem=>(
+      {todoItems.map((todoItem , idx)=>(
          <TodoItem
                 key={todoItem.id}
                 onComplete={()=>this.onComplete(todoItem)}
                 deleteTodoItem={()=>this.deleteTodoItem(todoItem)}
-                counter = {counter++}
+                counter = {idx + 1}
                 todoItem={todoItem}/>
       ))}
       <div >
