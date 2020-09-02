@@ -21,6 +21,7 @@ class TodoForm extends React.Component {
       id: shortid.generate(),
       complete: false,
     });
+
     this.setState({
       text: "",
     });

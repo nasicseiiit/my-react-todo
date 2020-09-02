@@ -18,6 +18,7 @@ class TodoList extends React.Component {
       });
     }
   };
+
   onComplete = (todoItem) => {
     this.setState({
       todoItems: this.state.todoItems.map(function (todo) {
@@ -62,6 +63,22 @@ class TodoList extends React.Component {
     });
   };
 
+  componentWillMount = () => {
+    var todos = this.getData();
+    this.storeData(todos);
+  };
+  storeData = (todoItems) => {
+    localStorage.setItem("todo-items", JSON.stringify(todoItems));
+  };
+  getData = () => {
+    let todos = JSON.parse(localStorage.getItem("todo-items"));
+    if (todos !== null) {
+      this.setState({
+        todoItems: todos,
+      });
+    }
+  };
+
   render() {
     let displayType = this.state.displayType;
     let todoItems =
@@ -73,6 +90,7 @@ class TodoList extends React.Component {
 
     return (
       <div className="todo-list">
+        {this.storeData(todoItems)}
         <TodoForm onSubmit={this.addItem} />
 
         {todoItems.map((todoItem, idx) => (
