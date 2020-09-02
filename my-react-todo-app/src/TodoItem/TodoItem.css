@@ -1,19 +1,19 @@
 .TodoItem {
-  display:flex;
- justify-content: center;
-padding:5px;
-margin-left: 30px;
-margin-right: 30px;
-margin-top: 15px;
- border-radius: 10px;
- border: "1px solid lightsalmon";
- cursor:"pointer";
-  background-color :"paleturquoise";
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 15px;
+  border-radius: 10px;
+  border: "1px solid lightsalmon";
+  cursor: "pointer";
+  background-color: "paleturquoise";
 }
 
 .completed {
   text-align: center;
-  text-decoration:  line-through;
+  text-decoration: line-through;
   color: blue;
   text-decoration-color: fuchsia;
 }
@@ -23,12 +23,10 @@ margin-top: 15px;
   color: purple;
 }
 
-.complete-button{
-color: green;
-
+.complete-button {
+  color: green;
 }
 
-.close-button{
-color: red;
-
+.close-button {
+  color: red;
 }

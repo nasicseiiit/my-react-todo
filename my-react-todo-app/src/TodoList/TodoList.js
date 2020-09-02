@@ -1,127 +1,115 @@
-import React from 'react';
-import TodoForm from '../TodoForm/TodoForm';
-import TodoItem from '../TodoItem/TodoItem';
-import './TodoList.css';
+import React from "react";
+import TodoForm from "../TodoForm/TodoForm";
+import TodoItem from "../TodoItem/TodoItem";
+import "./TodoList.css";
 
 class TodoList extends React.Component {
+  state = {
+    todoItems: [],
+    completeItems: [],
+    activeItems: [],
+    displayType: "All",
+  };
 
-    state = {
-      todoItems:[],
-      completeItems:[],
-      activeItems:[],
-    displayType:"All"
-    };
-
-
-
-  addItem = (todoItem)=>{
-    this.setState(
-      function()
-      {
-        if(todoItem.text!=="")
-        {
-        return {todoItems:[todoItem,...this.state.todoItems]};
-        }
+  addItem = (todoItem) => {
+    this.setState(function () {
+      if (todoItem.text !== "") {
+        return { todoItems: [todoItem, ...this.state.todoItems] };
       }
-    );
-
-  }
-  onComplete = (todoItem) =>{
-    this.setState(
-      {
-        todoItems: this.state.todoItems.map(function(todo)
-      {
-        if(todo.id===todoItem.id)
-        {
-          return {...todo,complete:!todo.complete};
-        }
-        else {
+    });
+  };
+  onComplete = (todoItem) => {
+    this.setState({
+      todoItems: this.state.todoItems.map(function (todo) {
+        if (todo.id === todoItem.id) {
+          return { ...todo, complete: !todo.complete };
+        } else {
           {
             return todo;
           }
         }
-      })
-      }
-    );
+      }),
+    });
+  };
 
-  }
+  deleteTodoItem = (todoItem) => {
+    this.setState({
+      todoItems: this.state.todoItems.filter(function (todo) {
+        return todo.id !== todoItem.id;
+      }),
+    });
+  };
 
-  deleteTodoItem = (todoItem)=>{
-    this.setState(
-      {
-        todoItems:this.state.todoItems.filter(function(todo){
-          return todo.id!==todoItem.id;
-        })
-      }
-    );
+  showAllItems = (typeToDisplay) => {
+    this.setState({
+      displayType: typeToDisplay,
+      todoItems: this.state.todoItems,
+    });
+  };
 
-  }
+  showActiveItems = (typeToDisplay) => {
+    this.setState({
+      displayType: typeToDisplay,
+      activeItems: this.state.todoItems.filter(function (todoItem) {
+        return !todoItem.complete;
+      }),
+    });
+  };
 
-  showAllItems=(typeToDisplay)=>{
-      this.setState(
-        {
-          displayType: typeToDisplay,
-          todoItems:this.state.todoItems
-        }
-      );
+  showCompleteItems = (typeToDisplay) => {
+    this.setState({
+      displayType: typeToDisplay,
+      completeItems: this.state.todoItems.filter(function (todoItem) {
+        return todoItem.complete;
+      }),
+    });
+  };
 
-  }
-
-  showActiveItems=(typeToDisplay)=>{
-      this.setState(
-        {
-          displayType: typeToDisplay,
-          activeItems:this.state.todoItems.filter(function(todoItem){
-            return !todoItem.complete;
-          })
-        }
-      );
-
-  }
-
-  showCompleteItems=(typeToDisplay)=>{
-      this.setState(
-        {
-          displayType: typeToDisplay,
-          completeItems:this.state.todoItems.filter(function(todoItem){
-            return todoItem.complete;
-          })
-        }
-      );
-
-  }
-
-
-
-  render () {
-
+  render() {
     let displayType = this.state.displayType;
-    let todoItems = displayType==="Active"?this.state.activeItems:displayType==="Complete"?this.state.completeItems:this.state.todoItems;
-
+    let todoItems =
+      displayType === "Active"
+        ? this.state.activeItems
+        : displayType === "Complete"
+        ? this.state.completeItems
+        : this.state.todoItems;
 
     return (
-    <div className="todo-list">
+      <div className="todo-list">
+        <TodoForm onSubmit={this.addItem} />
 
-      <TodoForm onSubmit={this.addItem} />
-
-      {todoItems.map((todoItem , idx)=>(
-         <TodoItem
-                key={todoItem.id}
-                onComplete={()=>this.onComplete(todoItem)}
-                deleteTodoItem={()=>this.deleteTodoItem(todoItem)}
-                counter = {idx + 1}
-                todoItem={todoItem}/>
-      ))}
-      <div >
-      <button  className="all-button" onClick={()=>this.showAllItems("All")}>All</button>
-      <button  className="active-button" onClick={()=>this.showActiveItems("Active")}>Active</button>
-      <button  className="complete-button" onClick={()=>this.showCompleteItems("Complete")}>Complete</button>
+        {todoItems.map((todoItem, idx) => (
+          <TodoItem
+            key={todoItem.id}
+            onComplete={() => this.onComplete(todoItem)}
+            deleteTodoItem={() => this.deleteTodoItem(todoItem)}
+            counter={idx + 1}
+            todoItem={todoItem}
+          />
+        ))}
+        <div>
+          <button
+            className="all-button"
+            onClick={() => this.showAllItems("All")}
+          >
+            All
+          </button>
+          <button
+            className="active-button"
+            onClick={() => this.showActiveItems("Active")}
+          >
+            Active
+          </button>
+          <button
+            className="complete-button"
+            onClick={() => this.showCompleteItems("Complete")}
+          >
+            Complete
+          </button>
+        </div>
+        <div>Total Items are: {todoItems.length}</div>
       </div>
-      <div >
-      Total Items are: {todoItems.length}
-      </div>
-    </div>
-  );
+    );
   }
 }
 

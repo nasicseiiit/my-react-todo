@@ -1,12 +1,12 @@
-.TodoForm{
+.TodoForm {
   text-align: center;
   color: green;
 }
-.InputLabel{
-  margin:10px;
+.InputLabel {
+  margin: 10px;
   color: blue;
 }
 
-.add-button{
+.add-button {
   background-color: orange;
 }
