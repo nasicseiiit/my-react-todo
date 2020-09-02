@@ -49,7 +49,7 @@ class TodoForm extends React.Component {
       >
 
       </input>
-      <button style={{color: "brown"}} onClick={this.onFormSubmit}>Add</button>
+      <button className="add-button" onClick={this.onFormSubmit}>Add</button>
       </form>
       </div>
     );

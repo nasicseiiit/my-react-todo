@@ -1,12 +1,14 @@
 import React from 'react';
 import TodoForm from './TodoForm';
 import TodoItem from './TodoItem';
-
+import './TodoList.css';
 
 class TodoList extends React.Component {
 
     state = {
       todoItems:[],
+      completeItems:[],
+      activeItems:[],
     displayType:"All"
     };
 
@@ -55,10 +57,35 @@ class TodoList extends React.Component {
 
   }
 
-  showTodoItems=(typeToDisplay)=>{
+  showAllItems=(typeToDisplay)=>{
       this.setState(
         {
-            displayType:typeToDisplay
+          displayType: typeToDisplay,
+          todoItems:this.state.todoItems
+        }
+      );
+
+  }
+
+  showActiveItems=(typeToDisplay)=>{
+      this.setState(
+        {
+          displayType: typeToDisplay,
+          activeItems:this.state.todoItems.filter(function(todoItem){
+            return !todoItem.complete;
+          })
+        }
+      );
+
+  }
+
+  showCompleteItems=(typeToDisplay)=>{
+      this.setState(
+        {
+          displayType: typeToDisplay,
+          completeItems:this.state.todoItems.filter(function(todoItem){
+            return todoItem.complete;
+          })
         }
       );
 
@@ -68,31 +95,12 @@ class TodoList extends React.Component {
 
   render () {
 
+    let displayType = this.state.displayType;
+    let todoItems = displayType==="Active"?this.state.activeItems:displayType==="Complete"?this.state.completeItems:this.state.todoItems;
 
-    let todoItems=[];
-    let totalItems;
-    if(this.state.displayType==="All"){
-      todoItems = this.state.todoItems;
-      totalItems = todoItems.length;
-
-    }
-
-    else if(this.state.displayType==="Active"){
-      todoItems = this.state.todoItems.filter(function(todoItem){
-        return !todoItem.complete;
-      })
-      totalItems = todoItems.length;
-    }
-
-    else if(this.state.displayType==="Complete"){
-      todoItems = this.state.todoItems.filter(function(todoItem){
-        return todoItem.complete;
-      })
-      totalItems = todoItems.length;
-    }
 
     return (
-    <div style={{textAlign:"center", color: "fuchsia", marginRight:500, marginLeft:500, border: "5px solid deepskyblue" }}>
+    <div className="todo-list">
 
       <TodoForm onSubmit={this.addItem} />
 
@@ -105,12 +113,12 @@ class TodoList extends React.Component {
                 todoItem={todoItem}/>
       ))}
       <div >
-      <button  style={{color: "purple"}} onClick={()=>this.showTodoItems("All")}>All</button>
-      <button  style={{color: "orangered"}} onClick={()=>this.showTodoItems("Active")}>Active</button>
-      <button  style={{color: "green"}} onClick={()=>this.showTodoItems("Complete")}>Complete</button>
+      <button  className="all-button" onClick={()=>this.showAllItems("All")}>All</button>
+      <button  className="active-button" onClick={()=>this.showActiveItems("Active")}>Active</button>
+      <button  className="complete-button" onClick={()=>this.showCompleteItems("Complete")}>Complete</button>
       </div>
       <div >
-      Total Items are: {totalItems}
+      Total Items are: {todoItems.length}
       </div>
     </div>
   );
