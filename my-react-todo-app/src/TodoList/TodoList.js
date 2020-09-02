@@ -12,22 +12,19 @@ class TodoList extends React.Component {
   };
 
   addItem = (todoItem) => {
-    this.setState(function () {
-      if (todoItem.text !== "") {
-        return { todoItems: [todoItem, ...this.state.todoItems] };
-      }
-    });
+    if (todoItem.text !== "") {
+      this.setState({
+        todoItems: [todoItem, ...this.state.todoItems],
+      });
+    }
   };
   onComplete = (todoItem) => {
     this.setState({
       todoItems: this.state.todoItems.map(function (todo) {
-        if (todo.id === todoItem.id) {
+        if (todo.id === todoItem.id)
           return { ...todo, complete: !todo.complete };
-        } else {
-          {
-            return todo;
-          }
-        }
+
+        return todo;
       }),
     });
   };
