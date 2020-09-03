@@ -64,9 +64,8 @@ class TodoList extends React.Component {
     });
   };
 
-  componentWillMount = () => {
-    var todos = this.getData();
-    this.storeData(todos);
+  componentDidMount = () => {
+    this.getData();
   };
   storeData = (todoItems) => {
     localStorage.setItem("todo-items", JSON.stringify(todoItems));
