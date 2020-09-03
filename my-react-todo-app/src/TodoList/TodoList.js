@@ -15,7 +15,8 @@ class TodoList extends React.Component {
     if (todoItem.text !== "") {
       this.setState({
         todoItems: [todoItem, ...this.state.todoItems],
-      });
+      }, () => { this.storeData(this.state.todoItems);
+      }  );
     }
   };
 
@@ -90,7 +91,7 @@ class TodoList extends React.Component {
 
     return (
       <div className="todo-list">
-        {this.storeData(todoItems)}
+
         <TodoForm onSubmit={this.addItem} />
 
         {todoItems.map((todoItem, idx) => (
