@@ -1,6 +1,7 @@
 import React from "react";
 import TodoForm from "../TodoForm/TodoForm";
 import TodoItem from "../TodoItem/TodoItem";
+import { storeData, getData } from "../Database/Database";
 import "./TodoList.css";
 
 class TodoList extends React.Component {
@@ -11,12 +12,29 @@ class TodoList extends React.Component {
     displayType: "All",
   };
 
+  componentDidMount = () => {
+    let todos = getData();
+    this.setTodoItems(todos);
+  };
+
+  setTodoItems = (todos) => {
+    if (todos !== null) {
+      this.setState({
+        todoItems: todos,
+      });
+    }
+  };
+
   addItem = (todoItem) => {
     if (todoItem.text !== "") {
-      this.setState({
-        todoItems: [todoItem, ...this.state.todoItems],
-      }, () => { this.storeData(this.state.todoItems);
-      }  );
+      this.setState(
+        {
+          todoItems: [todoItem, ...this.state.todoItems],
+        },
+        () => {
+          storeData(this.state.todoItems);
+        }
+      );
     }
   };
 
@@ -64,21 +82,6 @@ class TodoList extends React.Component {
     });
   };
 
-  componentDidMount = () => {
-    this.getData();
-  };
-  storeData = (todoItems) => {
-    localStorage.setItem("todo-items", JSON.stringify(todoItems));
-  };
-  getData = () => {
-    let todos = JSON.parse(localStorage.getItem("todo-items"));
-    if (todos !== null) {
-      this.setState({
-        todoItems: todos,
-      });
-    }
-  };
-
   render() {
     let displayType = this.state.displayType;
     let todoItems =
@@ -90,7 +93,6 @@ class TodoList extends React.Component {
 
     return (
       <div className="todo-list">
-
         <TodoForm onSubmit={this.addItem} />
 
         {todoItems.map((todoItem, idx) => (
