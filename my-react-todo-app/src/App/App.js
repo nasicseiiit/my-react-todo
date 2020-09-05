@@ -1,11 +1,17 @@
 import React from "react";
-import TodoList from "../TodoList/TodoList";
+import { BrowserRouter, Route } from 'react-router-dom';
+import Navbar from "../Navbar/Navbar";
+import Todo from "../Todo/Todo";
 
 function App() {
   return (
-    <div className="App">
-      <TodoList />
+
+    <BrowserRouter>
+    <div >
+      <Navbar/>
+      <Route path= '/Todo' component={Todo}/>
     </div>
+  </BrowserRouter>
   );
 }
 
