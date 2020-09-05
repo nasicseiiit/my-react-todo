@@ -46,7 +46,10 @@ class TodoList extends React.Component {
 
         return todo;
       }),
-    });
+    },() => {
+      storeData(this.state.todoItems);
+    }
+  );
   };
 
   deleteTodoItem = (todoItem) => {
@@ -54,7 +57,9 @@ class TodoList extends React.Component {
       todoItems: this.state.todoItems.filter(function (todo) {
         return todo.id !== todoItem.id;
       }),
-    });
+    },() => {
+      storeData(this.state.todoItems);}
+  );
   };
 
   showAllItems = (typeToDisplay) => {

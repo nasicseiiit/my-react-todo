@@ -1,10 +1,11 @@
 import React from 'react';
-
+import './Navbar.css';
 const Navbar = () => {
     return(
         <nav >
-        <div >
-        <button><a href="/todo">Todo</a></button>
+        <div className="nav">
+
+        <button className="todo-button"><a href="/Todo">Todo</a></button>
         </div>
         </nav>
 
