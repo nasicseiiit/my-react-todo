@@ -1,6 +1,7 @@
 import React from "react";
 import "./TodoForm.css";
 import shortid from "shortid";
+import { Button } from "@material-ui/core";
 
 class TodoForm extends React.Component {
   state = {
@@ -39,9 +40,13 @@ class TodoForm extends React.Component {
             value={this.state.text}
             onChange={this.handleChange}
           ></input>
-          <button className="add-button" onClick={this.onFormSubmit}>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={this.onFormSubmit}
+          >
             Add
-          </button>
+          </Button>
         </form>
       </div>
     );

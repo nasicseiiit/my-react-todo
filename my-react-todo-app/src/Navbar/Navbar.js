@@ -1,16 +1,17 @@
-import React from 'react';
-import './Navbar.css';
+import React from "react";
+import "./Navbar.css";
+import { Button } from "@material-ui/core";
+
 const Navbar = () => {
-    return(
-        <nav >
-        <div className="nav">
-
-        <button className="todo-button"><a href="/Todo">Todo</a></button>
-        </div>
-        </nav>
-
-    )
-}
-
+  return (
+    <nav>
+      <div className="nav">
+        <Button color="secondary" variant="outlined">
+          <a href="/Todo">Todo</a>
+        </Button>
+      </div>
+    </nav>
+  );
+};
 
 export default Navbar;

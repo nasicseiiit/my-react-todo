@@ -1,6 +1,7 @@
 import React from "react";
-
 import "./TodoItem.css";
+import { Button, ListItem } from "@material-ui/core";
+
 
 function TodoItem(props) {
   const listItemsStyle = props.todoItem.complete
@@ -12,12 +13,16 @@ function TodoItem(props) {
       <li className={listItemsStyle} onClick={props.onComplete}>
         {props.todoItem.text}
       </li>
-      <button className="complete-button" onClick={props.onComplete}>
+      <Button color="primary" variant="outlined" onClick={props.onComplete}>
         ✓
-      </button>
-      <button className="close-button" onClick={props.deleteTodoItem}>
+      </Button>
+      <Button
+        color="secondary"
+        variant="outlined"
+        onClick={props.deleteTodoItem}
+      >
         x
-      </button>
+      </Button>
     </div>
   );
 }

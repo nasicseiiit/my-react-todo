@@ -2,7 +2,7 @@ import React from "react";
 import TodoForm from "../TodoForm/TodoForm";
 import TodoItem from "../TodoItem/TodoItem";
 import { storeData, getData } from "../Database/Database";
-import { Button }  from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import "./TodoList.css";
 
 class TodoList extends React.Component {
@@ -40,27 +40,32 @@ class TodoList extends React.Component {
   };
 
   onComplete = (todoItem) => {
-    this.setState({
-      todoItems: this.state.todoItems.map(function (todo) {
-        if (todo.id === todoItem.id)
-          return { ...todo, complete: !todo.complete };
+    this.setState(
+      {
+        todoItems: this.state.todoItems.map(function (todo) {
+          if (todo.id === todoItem.id)
+            return { ...todo, complete: !todo.complete };
 
-        return todo;
-      }),
-    },() => {
-      storeData(this.state.todoItems);
-    }
-  );
+          return todo;
+        }),
+      },
+      () => {
+        storeData(this.state.todoItems);
+      }
+    );
   };
 
   deleteTodoItem = (todoItem) => {
-    this.setState({
-      todoItems: this.state.todoItems.filter(function (todo) {
-        return todo.id !== todoItem.id;
-      }),
-    },() => {
-      storeData(this.state.todoItems);}
-  );
+    this.setState(
+      {
+        todoItems: this.state.todoItems.filter(function (todo) {
+          return todo.id !== todoItem.id;
+        }),
+      },
+      () => {
+        storeData(this.state.todoItems);
+      }
+    );
   };
 
   showAllItems = (typeToDisplay) => {
@@ -112,22 +117,22 @@ class TodoList extends React.Component {
         ))}
         <div>
           <Button
-            color= "primary"
-            variant= "outlined"
+            color="primary"
+            variant="outlined"
             onClick={() => this.showAllItems("All")}
           >
             All
           </Button>
           <Button
-            color= "secondary"
-            variant= "outlined"
+            color="secondary"
+            variant="outlined"
             onClick={() => this.showActiveItems("Active")}
           >
             Active
           </Button>
           <Button
-            color= "primary"
-            variant= "outlined"
+            color="primary"
+            variant="outlined"
             onClick={() => this.showCompleteItems("Complete")}
           >
             Complete
