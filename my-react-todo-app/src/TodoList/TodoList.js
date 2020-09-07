@@ -2,6 +2,7 @@ import React from "react";
 import TodoForm from "../TodoForm/TodoForm";
 import TodoItem from "../TodoItem/TodoItem";
 import { storeData, getData } from "../Database/Database";
+import { Button }  from "@material-ui/core";
 import "./TodoList.css";
 
 class TodoList extends React.Component {
@@ -110,24 +111,27 @@ class TodoList extends React.Component {
           />
         ))}
         <div>
-          <button
-            className="all-button"
+          <Button
+            color= "primary"
+            variant= "outlined"
             onClick={() => this.showAllItems("All")}
           >
             All
-          </button>
-          <button
-            className="active-button"
+          </Button>
+          <Button
+            color= "secondary"
+            variant= "outlined"
             onClick={() => this.showActiveItems("Active")}
           >
             Active
-          </button>
-          <button
-            className="complete-button"
+          </Button>
+          <Button
+            color= "primary"
+            variant= "outlined"
             onClick={() => this.showCompleteItems("Complete")}
           >
             Complete
-          </button>
+          </Button>
         </div>
         <div>Total Items are: {todoItems.length}</div>
       </div>

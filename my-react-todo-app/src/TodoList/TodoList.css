@@ -5,15 +5,3 @@
   margin-left: 500px;
   border: 5px solid deepskyblue;
 }
-
-.all-button {
-  color: purple;
-}
-
-.active-button {
-  color: orangered;
-}
-
-.complete-button {
-  color: green;
-}
