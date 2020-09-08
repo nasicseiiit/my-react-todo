@@ -111,7 +111,6 @@ class TodoList extends React.Component {
             key={todoItem.id}
             onComplete={() => this.onComplete(todoItem)}
             deleteTodoItem={() => this.deleteTodoItem(todoItem)}
-            counter={idx + 1}
             todoItem={todoItem}
           />
         ))}
